@@ -8,19 +8,12 @@ function the_content() {
 
 function limit_words($string, $position, $word_limit)
 {
-    $words = explode(" ",$string);
-    return implode(" ",array_splice($words, $position,$word_limit));
+	$words = explode(" ",$string);
+	return implode(" ",array_splice($words, $position,$word_limit));
 }
-
-
-if (str_word_count(the_content()) > 120) {
-
-	$stringStart = limit_words(the_content(), 0, 120);
-	
-	$stringEnd = limit_words(the_content(), 120, str_word_count(the_content()));
-
-	$content = $stringStart . ' ... <span>Read More</span>'; 
-
+if (str_word_count(get_the_content()) > 120) {
+	echo limit_words(get_the_content(), 0, 120) . '<span class="js-readMore"> ... Read More </span>';
+	echo '<span class="u-hidden"> ' . limit_words(get_the_content(), 120, str_word_count(get_the_content())) . '</span>';
+} else {
+	echo the_content();
 }
-echo $content;
-echo '<span class="hidden">' . $stringEnd . '</span>';
